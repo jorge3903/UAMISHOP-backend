@@ -1,0 +1,16 @@
+mx/uam/tsis/sbtutorial/Application.class
+mx/uam/tsis/sbtutorial/datos/ArchivoRepository.class
+mx/uam/tsis/sbtutorial/negocio/ArchivoService.class
+mx/uam/tsis/sbtutorial/negocio/dominio/Usuario.class
+exception/FileStorageException.class
+mx/uam/tsis/sbtutorial/negocio/UsuarioService.class
+property/FileStorageProperties.class
+mx/uam/tsis/sbtutorial/negocio/dominio/Producto.class
+mx/uam/tsis/sbtutorial/datos/UsuarioRepository.class
+mx/uam/tsis/sbtutorial/servicios/ArchivoRestController.class
+mx/uam/tsis/sbtutorial/negocio/ProductoService.class
+mx/uam/tsis/sbtutorial/datos/ProductoRepository.class
+mx/uam/tsis/sbtutorial/servicios/ProductoRestController.class
+exception/MyFileNotFoundException.class
+mx/uam/tsis/sbtutorial/servicios/UsuarioRestController.class
+mx/uam/tsis/sbtutorial/negocio/dominio/Archivo.class
