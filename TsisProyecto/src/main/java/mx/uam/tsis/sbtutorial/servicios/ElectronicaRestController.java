@@ -3,6 +3,7 @@ package mx.uam.tsis.sbtutorial.servicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import mx.uam.tsis.sbtutorial.negocio.ElectronicaService;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Archivo;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Electronica;
 
+@CrossOrigin ( origins   =   {   "http://localhost:4200", "https://uamishop.azurewebsites.net"} ) 
 @RestController
 public class ElectronicaRestController  {
 
@@ -38,8 +40,9 @@ public class ElectronicaRestController  {
     @PostMapping("/electronica")
 	public ResponseEntity<Electronica> agregarElectronica(
 			@RequestParam String nombre, @RequestParam Double precio, 
-			@RequestParam String descripcion, @RequestParam("file") MultipartFile file){
+			@RequestParam String descripcion, @RequestParam("file") MultipartFile file,Long idUsuario){
     	
+    	if (idUsuario !=null) {
     	//se carga el nombre original del archivo y su extencion, ademas se guarda el 
     	//archivo en la carpeta archivos del proyecto
     	 String fileName = fileStorageService.storeFile(file);
@@ -53,7 +56,11 @@ public class ElectronicaRestController  {
          
          //se construye la url del archivo para su consumo en la API
          //http://localhost:8080/archivo/archivo.extencion
-         String url = "http://localhost:8080/archivo/" + file.getOriginalFilename();
+         String url = ServletUriComponentsBuilder.fromCurrentContextPath()
+                 .path("/archivo/")
+                 .path(fileName)
+                 .toUriString();
+        		 //"http://localhost:8080/archivo/" + file.getOriginalFilename();
          
          //se crea el archivo con los datos
          Archivo archivo = fileStorageService.agregarArchivo(new Archivo(fileName, url, fileDownloadUri,
@@ -70,12 +77,19 @@ public class ElectronicaRestController  {
     	
 		if(servicioElectronica.agregarElectronica(electronica) != null) {
 			//se ha creado correctamente el producto
-			return new ResponseEntity<Electronica>(electronica, HttpStatus.OK);
-		}
-		else {
+			if(servicioElectronica.agregarDueño(idUsuario, electronica)) {
+				return new ResponseEntity<Electronica>(electronica, HttpStatus.OK);
+			}else {
+				return new ResponseEntity<Electronica>(electronica, HttpStatus.BAD_REQUEST);
+			}
+		}else {
 			//no se pudo crear el producto
 			return new ResponseEntity<Electronica>(electronica, HttpStatus.BAD_REQUEST);
 		}
+    	}else {
+    		Electronica elec=null;
+    		return new ResponseEntity<Electronica>(elec, HttpStatus.BAD_REQUEST);
+    	}
 	}
 	
 	/**

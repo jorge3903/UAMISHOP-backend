@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,7 @@ import mx.uam.tsis.sbtutorial.negocio.dominio.Archivo;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Producto;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Usuario;
 
+@CrossOrigin ( origins   =   {   "http://localhost:4200", "https://uamishop.azurewebsites.net"} ) 
 @RestController
 public class ProductoRestController {
 	
@@ -66,7 +68,12 @@ public class ProductoRestController {
          
          //se construye la url del archivo para su consumo en la API
          //http://localhost:8080/archivo/archivo.extencion
-         String url = "http://localhost:8080/archivo/" + file.getOriginalFilename();
+         String url = ServletUriComponentsBuilder.fromCurrentContextPath()
+                 .path("/archivo/")
+                 .path(fileName)
+                 .toUriString();
+        		 
+        		 //"http://localhost:8080/archivo/" + file.getOriginalFilename();
          
          //se crea el archivo con los datos
          Archivo archivo = fileStorageService.agregarArchivo(new Archivo(fileName, url, fileDownloadUri,
@@ -103,6 +110,15 @@ public class ProductoRestController {
 	}
 	
 	/**
+	 *  Metodo para obtener todos los Productos favoritos de un usuario
+	 * @return lista de todos los productos favoritos del usuario
+	 */
+	@RequestMapping(value = "/misFavoritos/{idUsuario}", method = RequestMethod.GET)
+	public Collection<Producto> dameFavoritos(@PathVariable Long idUsuario){
+		return servicioProductos.dameFavoritos(idUsuario);
+	}
+	
+	/**
 	 * Metodo para obtener todos los Productos de la API por CATEGORIA
 	 * @param categoria
 	 * @return lista de Productos con esa categoria
@@ -111,6 +127,26 @@ public class ProductoRestController {
 	public Iterable<Producto> dameProductosByCategoria(@PathVariable String cat){
 		return servicioProductos.dameProductosByCategoria(cat);
 	}*/
+	
+	/**
+	 * Metodo para adregar un producto favorito a un usuario
+	 * @param idProducto, idUsuario
+	 * @return true si lo agrego bien, false si no
+	 */
+	@RequestMapping(value = "/agregaFavorito/{idUsuario}/{idProducto}", method = RequestMethod.PUT)
+	public boolean agregaFavorito(@PathVariable Long idUsuario,@PathVariable Long idProducto){
+		return servicioProductos.agregarEnFavoritos(idUsuario, idProducto);
+	}
+	
+	/**
+	 * Metodo para quitar un producto favorito a un usuario
+	 * @param idProducto, idUsuario
+	 * @return true si lo quito bien, false si no
+	 */
+	@RequestMapping(value = "/eliminaFavorito/{idUsuario}/{idProducto}", method = RequestMethod.PUT)
+	public Collection<Producto> eliminaFavorito(@PathVariable Long idUsuario,@PathVariable Long idProducto){
+		return servicioProductos.quitarFavorito(idUsuario, idProducto);
+	}
 	
 	/**
 	 * NO IMPLEMENTADO
@@ -129,18 +165,39 @@ public class ProductoRestController {
 	}
 	
 	/**
+	 *  Metodo para obtener el producto con el ID especificado
+	 * @return producto con id especificado
+	 */
+	@RequestMapping(value = "/productos/{idProducto}", method = RequestMethod.GET)
+	public Producto dameProductoConId(@PathVariable Long idProducto){
+		Producto producto = servicioProductos.ProductoById(idProducto);
+		// return servicioProductos.dameProductos();
+		return producto;
+	}
+	
+	
+	
+	/**
+	 *  Metodo para obtener todos los Productos de un usuario
+	 * @return lista de todos los productos del usuario con el id especificado
+	 */
+	@RequestMapping(value = "/misProductos/{idUsuario}", method = RequestMethod.GET)
+	public Collection<Producto> dameMisProductos(@PathVariable Long idUsuario){
+		Collection<Producto> misProductos = servicioProductos.misProductos(idUsuario);
+		// return servicioProductos.dameProductos();
+		return misProductos;
+	}
+	
+	
+	/**
 	 * Metodo para eliminar un producto de la API
 	 * @param idProducto
 	 * @return Mensaje con el resultado obtenido para el producto
 	 */
-	@RequestMapping(value = "/productos/{idProducto}", method = RequestMethod.DELETE)
-	public String eliminarProducto(@PathVariable Long idProducto){
-		if(servicioProductos.eliminarProducto(idProducto)) {
-			return "OK. PRODUCTO ELIMINADO CORRECTAMENTE";
-		}
-		else {
-			return "ERROR. NO SE PUDO ELIMINAR EL PRODUCTO INDICADO";
-		}
+	@RequestMapping(value = "/productos", method = RequestMethod.DELETE)
+	public Collection<Producto> eliminarProducto(@RequestParam Long idUsuario, @RequestParam Long idProducto){
+		Collection<Producto> productos = servicioProductos.eliminarProducto(idUsuario,idProducto);
+		return productos;
 	}
 	
 }

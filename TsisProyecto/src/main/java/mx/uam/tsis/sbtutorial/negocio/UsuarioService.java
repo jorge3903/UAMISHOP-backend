@@ -16,14 +16,26 @@ public class UsuarioService {
 	private UsuarioRepository repository;
 
 	public Usuario agregarUsuario(Usuario usuario) {
-	for(Usuario usuarioActual : repository.findAll()) {
-			
+		for(Usuario usuarioActual : repository.findAll()) {	
 			if(usuarioActual.getCorreo().equals(usuario.getCorreo())) {
+				return usuarioActual;
+			}
+		}
+		return repository.save(usuario);
+	}
+	
+	public Usuario agregarProducto(Long idUsuario,Producto producto) {
+		Usuario usuario = repository.findOne(idUsuario);
+		Collection<Long> productos = usuario.getProductos();
+		if(productos.add(producto.getId())) {
+			if(repository.save(usuario)!=null) {
+				return usuario;
+			}else {
 				return null;
 			}
-	}
-
-		return repository.save(usuario);
+		}else {
+			return null;
+		}
 	}
 
 	public Collection<Usuario> dameUsuarios() {
@@ -46,7 +58,7 @@ public class UsuarioService {
 		return false;
 	}
 
-	public Usuario validaUsuario(String correo, String contraseña) {
+	/**public Usuario validaUsuario(String correo, String contraseña) {
 		// TODO Auto-generated method stub
         for(Usuario usuarioActual : repository.findAll()) {
 			
@@ -57,7 +69,7 @@ public class UsuarioService {
 	    }
         return null;
 		
-	}
+	}*/
 
 	public Usuario usuarioById(Long idUsuario) {
 		// TODO Auto-generated method stub
@@ -85,7 +97,7 @@ public class UsuarioService {
 		return null;
 	}
 
-	public Usuario usuarioConProducto(Long idProducto) {
+	/**public Usuario usuarioConProducto(Long idProducto) {
        for(Usuario usuarioActual : repository.findAll()) {
 			for(Producto productoActual:usuarioActual.getProductos()) {
 				if(productoActual.getId().equals(idProducto)) {
@@ -94,7 +106,7 @@ public class UsuarioService {
 			}
 	    }
 		return null;
-	}
+	}*/
 	
 	//metodos para el servicio
 }

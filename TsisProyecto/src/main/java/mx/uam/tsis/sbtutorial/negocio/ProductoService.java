@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import mx.uam.tsis.sbtutorial.datos.ProductoRepository;
+import mx.uam.tsis.sbtutorial.datos.UsuarioRepository;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Producto;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Usuario;
 
@@ -20,6 +21,8 @@ public class ProductoService {
 
 	@Autowired
 	private ProductoRepository repository;
+	@Autowired
+	private UsuarioRepository repositoryUsuario;
 
 	/**
      * Metodo del negocio que regresa todos los productos de la BD
@@ -50,15 +53,115 @@ public class ProductoService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	public Collection<Producto> dameFavoritos(Long idUsuario){
+		Usuario usuario = repositoryUsuario.findOne(idUsuario);
+		ArrayList<Producto> favoritos = new ArrayList<Producto>();
+		ArrayList<Long> numFav = new ArrayList<Long>();
+		if(usuario!=null) {
+			for(Long idProd:usuario.getFavoritos()) {
+				Producto prod=repository.findOne(idProd);
+				if(prod!=null) {
+					favoritos.add(prod);
+					numFav.add(idProd);
+				}
+			}
+			usuario.setFavoritos(numFav);
+			repositoryUsuario.save(usuario);
+			return favoritos;
+		}else {
+			return favoritos;
+		}
+	}
+	
+	
+	public boolean agregarEnFavoritos(Long idUsuario,Long idProducto) {
+		Producto prod=repository.findOne(idProducto);
+		if(prod!=null) {
+			Usuario usuario = repositoryUsuario.findOne(idUsuario);
+			if(usuario!=null) {
+				Collection<Long> fav = usuario.getFavoritos();
+				for(Long favorito:fav) {
+					if(favorito==idProducto) {
+						return false;
+					}
+				}
+				fav.add(idProducto);
+				usuario.setFavoritos(fav);
+				repositoryUsuario.save(usuario);
+				return true;
+			}else {
+				return false;
+			}
+		}else {
+			return false;
+		}
+	}
+	
+	
+	public Collection<Producto> quitarFavorito(Long idUsuario,Long idProducto){
+		Usuario usuario = repositoryUsuario.findOne(idUsuario);
+		Producto producto = repository.findOne(idProducto);
+		ArrayList<Long> idFav = new ArrayList<Long>();
+		ArrayList<Producto> favoritos= new ArrayList<Producto>();
+		if(usuario!=null && producto!=null) {
+			for(Long idProd:usuario.getFavoritos()) {
+				if(idProd==idProducto) {
+					continue;
+				}else {
+					favoritos.add(repository.findOne(idProd));
+					idFav.add(idProd);
+				}
+			}
+			usuario.setFavoritos(idFav);
+			repositoryUsuario.save(usuario);
+			return favoritos;
+		}else {
+			return favoritos;
+		}
+	}
+	
+	
+	public Collection<Producto> misProductos(Long idUsuario){
+		Usuario usuario = repositoryUsuario.findOne(idUsuario);
+		ArrayList<Producto> productos= new ArrayList<Producto>();
+		if(usuario !=null) {
+			for(Long idProducto:usuario.getProductos()) {
+				Producto prod = repository.findOne(idProducto);
+				if(prod!=null) {
+					productos.add(prod);
+				}
+			}
+			return productos;
+		}else {
+			return productos;
+		}
+	}
 
 	/**
      * Metodo del negocio que elimina un producto de la BD
      * @param  producto
      * @return  booleano con estado del producto
      */
-	public boolean eliminarProducto(Long idProducto) {
-		// TODO Auto-generated method stub
-		return false;
+	public Collection<Producto> eliminarProducto(Long idUsuario,Long idProducto) {
+		Usuario usuario = repositoryUsuario.findOne(idUsuario);
+		ArrayList<Long> productos= new ArrayList<Long>();
+		ArrayList<Producto> productosCompletos= new ArrayList<Producto>();
+		if(usuario!= null) {
+			for(Long idProd:usuario.getProductos()) {
+				if(idProd ==idProducto) {
+					repository.delete(idProd);
+				}else {
+					productos.add(idProd);
+					productosCompletos.add(repository.findOne(idProd));
+				}
+			}
+			usuario.setProductos(productos);
+			repositoryUsuario.save(usuario);
+			return productosCompletos;
+		}else {
+			return productosCompletos;
+		}
 	}
 	
 	/**

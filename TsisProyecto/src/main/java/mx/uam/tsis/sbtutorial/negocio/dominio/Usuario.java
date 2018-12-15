@@ -1,8 +1,10 @@
 package mx.uam.tsis.sbtutorial.negocio.dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,11 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * Entidad del modelo de dominio
+ * Entidad Usuario del modelo de dominio
  * 
  */
 @Entity
@@ -26,8 +27,6 @@ public class Usuario implements Serializable{
 	private Long id;
 	@Column(name="nombreUsuario")
 	private String nombre;
-	@Column(name="contraseña")
-	private String contra;
 	@Column(name="correo")
 	private String correo;
 	@Column(name="telefono")
@@ -37,10 +36,16 @@ public class Usuario implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="idArchivo")
 	private Archivo fotoPerfil;
-	@OneToMany( targetEntity=Producto.class )
-	private Collection<Producto> favoritos;
-	@OneToMany( targetEntity=Producto.class )
-	private Collection<Producto> productos;
+	//@OneToMany( targetEntity=Producto.class )
+	//private Collection<Producto> favoritos;
+	//@OneToMany( targetEntity=Producto.class )
+	//private Collection<Producto> productos;
+	@ElementCollection
+	@Column(name="productos")
+	private Collection<Long> productos;
+	@ElementCollection
+	@Column(name="favoritos")
+	private Collection<Long> favoritos;
 	
 	/**
 	 * Constructor por Default;
@@ -52,17 +57,11 @@ public class Usuario implements Serializable{
 	/**
 	 * Constructor para el usuario
 	 * @param nombre
-	 * @param contraseña
 	 * @param correo
-	 * @param telefono
-	 * @param productos
 	 */
-	public Usuario(String nombre, String contra, String correo, String telefono, Collection<Producto> productos) {
+	public Usuario(String nombre, String correo) {
 		this.nombre = nombre;
-		this.contra = contra;
 		this.correo = correo;
-		this.telefono = telefono;
-		this.productos = productos;
 	}
 
 	/**
@@ -97,21 +96,6 @@ public class Usuario implements Serializable{
 		this.nombre = nombre;
 	}
 	
-	/**
-	 * Recupera la Contrasela del usuario
-	 * @return contraseña
-	 */
-	public String getContra() {
-		return contra;
-	}
-	
-	/**
-	 * Actualiza la Contraseña del usuario
-	 * @param contraseña
-	 */
-	public void setContraseña(String contra) {
-		this.contra = contra;
-	}
 	
 	/**
 	 * Recupera el Correo del usuario
@@ -181,7 +165,7 @@ public class Usuario implements Serializable{
 	 * Recupera los Productos favoritos del usuario
 	 * @return productos
 	 */
-	public Collection<Producto> getFavoritos() {
+	public Collection<Long> getFavoritos() {
 		return favoritos;
 	}
 
@@ -189,7 +173,7 @@ public class Usuario implements Serializable{
 	 * Actualiza los Productos favoritos del usuario
 	 * @param productos
 	 */
-	public void setFavoritos(Collection<Producto> favoritos) {
+	public void setFavoritos(Collection<Long> favoritos) {
 		this.favoritos = favoritos;
 	}
 	
@@ -197,7 +181,7 @@ public class Usuario implements Serializable{
 	 * Recupera los Productos del usuario
 	 * @return productos
 	 */
-	public Collection<Producto> getProductos() {
+	public Collection<Long> getProductos() {
 		return productos;
 	}
 
@@ -205,7 +189,7 @@ public class Usuario implements Serializable{
 	 * Actualiza los Productos del usuario
 	 * @param productos
 	 */
-	public void setProductos(Collection<Producto> productos) {
+	public void setProductos(Collection<Long> productos) {
 		this.productos = productos;
 	}
 	

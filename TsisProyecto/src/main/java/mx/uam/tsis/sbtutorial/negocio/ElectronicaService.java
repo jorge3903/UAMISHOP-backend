@@ -5,16 +5,30 @@ import org.springframework.stereotype.Service;
 
 import mx.uam.tsis.sbtutorial.datos.ElectronicaRepository;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Electronica;
+import mx.uam.tsis.sbtutorial.negocio.dominio.Libro;
+import mx.uam.tsis.sbtutorial.negocio.dominio.Usuario;
 
 @Service
 public class ElectronicaService {
 	
 	@Autowired
 	private ElectronicaRepository repository;
+	@Autowired
+	private UsuarioService servicioUsuario;
 
 	public Iterable<Electronica> dameElectronica() {
 		// TODO Auto-generated method stub
 		return repository.findAll();
+	}
+	
+	public boolean agregarDueño(long idUsuario,Electronica electronica) {
+		Usuario usuario = servicioUsuario.agregarProducto(idUsuario, electronica);
+		electronica.setUsuario(usuario);
+		if(repository.save(electronica)!=null) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	public Electronica agregarElectronica(Electronica electronica) {

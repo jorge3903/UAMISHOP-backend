@@ -3,6 +3,7 @@ package mx.uam.tsis.sbtutorial.servicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +16,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import mx.uam.tsis.sbtutorial.negocio.ArchivoService;
 import mx.uam.tsis.sbtutorial.negocio.LibroService;
 import mx.uam.tsis.sbtutorial.negocio.ProductoService;
+import mx.uam.tsis.sbtutorial.negocio.UsuarioService;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Archivo;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Libro;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Producto;
 
+@CrossOrigin ( origins   =   {   "http://localhost:4200", "https://uamishop.azurewebsites.net"}) 
 @RestController
 public class LibroRestController {
 
@@ -40,8 +43,9 @@ public class LibroRestController {
     @PostMapping("/libros")
 	public ResponseEntity<Libro> agregarLibro(
 			@RequestParam String nombre, @RequestParam Double precio, 
-			@RequestParam String descripcion, @RequestParam("file") MultipartFile file){
+			@RequestParam String descripcion, @RequestParam("file") MultipartFile file,Long idUsuario){
     	
+    	if (idUsuario !=null) {
     	//se carga el nombre original del archivo y su extencion, ademas se guarda el 
     	//archivo en la carpeta archivos del proyecto
     	 String fileName = fileStorageService.storeFile(file);
@@ -55,7 +59,11 @@ public class LibroRestController {
          
          //se construye la url del archivo para su consumo en la API
          //http://localhost:8080/archivo/archivo.extencion
-         String url = "http://localhost:8080/archivo/" + file.getOriginalFilename();
+         String url = ServletUriComponentsBuilder.fromCurrentContextPath()
+                 .path("/archivo/")
+                 .path(fileName)
+                 .toUriString();
+        		 //"http://localhost:8080/archivo/" + file.getOriginalFilename();
          
          //se crea el archivo con los datos
          Archivo archivo = fileStorageService.agregarArchivo(new Archivo(fileName, url, fileDownloadUri,
@@ -72,12 +80,20 @@ public class LibroRestController {
     	
 		if(servicioLibros.agregarLibro(libro) != null) {
 			//se ha creado correctamente el producto
-			return new ResponseEntity<Libro>(libro, HttpStatus.CREATED);
+			if(servicioLibros.agregarDueño(idUsuario, libro)) {
+				return new ResponseEntity<Libro>(libro, HttpStatus.CREATED);
+			}else { 
+				return new ResponseEntity<Libro>(libro, HttpStatus.BAD_REQUEST);
+			}
 		}
 		else {
 			//no se pudo crear el producto
 			return new ResponseEntity<Libro>(libro, HttpStatus.BAD_REQUEST);
 		}
+    	}else {
+    		Libro lib=null;
+    		return new ResponseEntity<Libro>(lib, HttpStatus.BAD_REQUEST);
+    	}
 	}
 	
 	/**

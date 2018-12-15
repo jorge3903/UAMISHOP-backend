@@ -7,19 +7,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import mx.uam.tsis.sbtutorial.negocio.ProductoService;
 import mx.uam.tsis.sbtutorial.negocio.UsuarioService;
-import mx.uam.tsis.sbtutorial.negocio.dominio.Producto;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Usuario;
 
+@CrossOrigin ( origins   =   {   "http://localhost:4200", "https://uamishop.azurewebsites.net"}) 
 @RestController
 public class UsuarioRestController {
 
@@ -32,12 +34,13 @@ public class UsuarioRestController {
 	
 	/**
 	 * Metodo para agregar un usuario a la API
-	 * @param usuario
+	 * @param nombre
+	 * @param correo
 	 * @return el usuario agregado, si no un error de peticion http
 	 */
 	@PostMapping(value = "/usuarios")
-	public ResponseEntity<Usuario> agregarUsuario(@RequestBody Usuario usuario){
-		Usuario nuevoUsuario = servicioUsuarios.agregarUsuario(usuario);
+	public ResponseEntity<Usuario> agregarUsuario(@RequestParam String nombre,@RequestParam String correo){
+		Usuario nuevoUsuario = servicioUsuarios.agregarUsuario(new Usuario(nombre,correo));
 		if(nuevoUsuario!=null) {
 			//return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.CREATED);
 			return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.OK);
@@ -55,7 +58,7 @@ public class UsuarioRestController {
 	 * @param contraseña
 	 * @return el usuario si existe en la base de datos, null si no existe
 	 */
-	@RequestMapping(value = "/usuarios/{correo}/{contraseña}", method = RequestMethod.GET)
+	/**@RequestMapping(value = "/usuarios/{correo}/{contraseña}", method = RequestMethod.GET)
 	public ResponseEntity<Usuario> logearUsuario(@PathVariable String correo , @PathVariable String contraseña){
 		Usuario nuevoUsuario=servicioUsuarios.validaUsuario(correo,contraseña);
 		if(nuevoUsuario!=null) {
@@ -65,7 +68,7 @@ public class UsuarioRestController {
 		else {
 			return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.BAD_REQUEST);
 		}
-	}
+	}*/
 	
 	/**
 	 * Metodo para obtener todos los usuarios de la API
@@ -82,16 +85,16 @@ public class UsuarioRestController {
 	 * @param usuario
 	 * @return regresa la entidad actualizada
 	 */
-	@RequestMapping(value = "/usuarios/{idUsuario}/productos/{idProducto}", method = RequestMethod.PUT)
+	/**@RequestMapping(value = "/usuarios/{idUsuario}/productos/{idProducto}", method = RequestMethod.PUT)
 	public Usuario actulizarUsuario(@PathVariable Long idUsuario, @PathVariable Long idProducto){
 		
 		Usuario usuario = servicioUsuarios.usuarioById(idUsuario);
 		Producto producto = servicioProductos.ProductoById(idProducto);
 		
-		usuario.getProductos().add(producto);
+		usuario.getProductos().add(idproducto);
 		
 		return servicioUsuarios.actualizarUsuario(usuario);
-	}
+	}*/
 	
 	/**
 	 * Metodo para borrar a un usuario de la BD

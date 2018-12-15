@@ -3,6 +3,7 @@ package mx.uam.tsis.sbtutorial.servicios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import mx.uam.tsis.sbtutorial.negocio.ProyectosService;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Archivo;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Proyectos;
 
+@CrossOrigin ( origins   =   {   "http://localhost:4200", "https://uamishop.azurewebsites.net"} ) 
 @RestController
 public class ProyectosRestController {
 
@@ -40,8 +42,9 @@ public class ProyectosRestController {
     @PostMapping("/proyectos")
 	public ResponseEntity<Proyectos> agregarProyecto(
 			@RequestParam String nombre,@RequestParam String representante, @RequestParam Double precio, 
-			@RequestParam String descripcion,@RequestParam String requisitos, @RequestParam("file") MultipartFile file){
+			@RequestParam String descripcion,@RequestParam String requisitos, @RequestParam("file") MultipartFile file,Long idUsuario){
     	
+    	if (idUsuario !=null) {
     	//se carga el nombre original del archivo y su extencion, ademas se guarda el 
     	//archivo en la carpeta archivos del proyecto
     	 String fileName = fileStorageService.storeFile(file);
@@ -55,7 +58,11 @@ public class ProyectosRestController {
          
          //se construye la url del archivo para su consumo en la API
          //http://localhost:8080/archivo/archivo.extencion
-         String url = "http://localhost:8080/archivo/" + file.getOriginalFilename();
+         String url = ServletUriComponentsBuilder.fromCurrentContextPath()
+                 .path("/archivo/")
+                 .path(fileName)
+                 .toUriString();
+        		 //"http://localhost:8080/archivo/" + file.getOriginalFilename();
          
          //se crea el archivo con los datos
          Archivo archivo = fileStorageService.agregarArchivo(new Archivo(fileName, url, fileDownloadUri,
@@ -72,12 +79,19 @@ public class ProyectosRestController {
     	
 		if(servicioProyecto.agregarProyecto(proyecto) != null) {
 			//se ha creado correctamente el producto
-			return new ResponseEntity<Proyectos>(proyecto, HttpStatus.CREATED);
-		}
-		else {
+			if(servicioProyecto.agregarDueño(idUsuario, proyecto)) {
+				return new ResponseEntity<Proyectos>(proyecto, HttpStatus.CREATED);
+			}else {
+				return new ResponseEntity<Proyectos>(proyecto, HttpStatus.BAD_REQUEST);
+			}
+		}else {
 			//no se pudo crear el producto
 			return new ResponseEntity<Proyectos>(proyecto, HttpStatus.BAD_REQUEST);
 		}
+    	}else {
+    		Proyectos pro=null;
+    		return new ResponseEntity<Proyectos>(pro, HttpStatus.BAD_REQUEST);
+    	}
 	}
 	
 	/**
