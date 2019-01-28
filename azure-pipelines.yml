@@ -20,3 +20,9 @@ steps:
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+
+- task: AzureRmWebAppDeployment@3
+  inputs:
+    azureSubscription: '<uamishoppBacked>'
+    WebAppName: '<uamishopBack>'
+    Package: '$(System.DefaultWorkingDirectory)/**/*.war'
