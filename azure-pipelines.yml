@@ -23,6 +23,6 @@ steps:
 
 - task: AzureRmWebAppDeployment@3
   inputs:
-    azureSubscription: '<uamishoppBacked>'
-    WebAppName: '<uamishopBack>'
+    azureSubscription: 'uamishoppBacked'
+    WebAppName: 'uamishopBack'
     Package: '$(System.DefaultWorkingDirectory)/**/*.war'
