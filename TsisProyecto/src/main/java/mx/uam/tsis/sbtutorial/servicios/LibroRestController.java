@@ -147,4 +147,9 @@ public class LibroRestController {
 			return "ERROR. NO SE PUDO ELIMINAR EL PRODUCTO INDICADO";
 		}
 	}
+	
+	@RequestMapping(value = "/ropa", method = RequestMethod.GET)
+	public String prueba(){
+		return "Ya quedo"
+	}
 }
