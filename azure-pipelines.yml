@@ -25,4 +25,4 @@ steps:
   inputs:
     azureSubscription: 'uamishoppBacked'
     WebAppName: 'uamishopBack'
-    Package: 'TsisProyecto/target/tutorial-spring-boot-0.1.0.war'
+    Package: '$(System.DefaultWorkingDirectory)/**/*.war'
