@@ -148,8 +148,11 @@ public class LibroRestController {
 		}
 	}
 	
+	/**
+	*comentario de prueba
+	*/
 	@RequestMapping(value = "/ropa", method = RequestMethod.GET)
-	public String prueba(){
+	public String prueba1(){
 		return "Ya quedo";
 	}
 }
