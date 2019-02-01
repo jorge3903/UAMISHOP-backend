@@ -57,6 +57,12 @@
     </properties>
 
 	<packaging>war</packaging>
+	<distributionManagement>
+   <repository>
+      <id>uamb</id>
+        <url>https://uamb.azurewebsites.net</url>
+   </repository>
+</distributionManagement>
 
     <build>
         <plugins>
