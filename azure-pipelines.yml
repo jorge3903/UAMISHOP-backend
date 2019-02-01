@@ -12,14 +12,14 @@ pool:
 steps:
 - task: Maven@3
   inputs:
-    mavenPomFile: 'TsisProyecto/pom2.xml'
+    mavenPomFile: 'TsisProyecto/pom.xml'
     mavenOptions: '-Xmx3072m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.11'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean deploy'
+    goals: 'clean package'
 
 - task: AzureRmWebAppDeployment@3
   inputs:
