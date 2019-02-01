@@ -148,11 +148,10 @@ public class LibroRestController {
 		}
 	}
 	
-	/**
-	*comentario de prueba
-	*/
 	@RequestMapping(value = "/ropa", method = RequestMethod.GET)
-	public String prueba1(){
-		return "Ya quedo";
+	public ResponseEntity<Iterable<Libro>> dameLibros(){
+		Iterable<Libro> libro = servicioLibros.dameLibros();
+		// return servicioProductos.dameProductos();
+		return new ResponseEntity<Iterable<Libro>>(libro, HttpStatus.OK);
 	}
 }
