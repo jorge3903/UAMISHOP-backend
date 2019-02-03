@@ -143,5 +143,12 @@ public class ElectronicaRestController  {
 			return "ERROR. NO SE PUDO ELIMINAR EL PRODUCTO INDICADO";
 		}
 	}
+	
+	@RequestMapping(value = "/cd", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<Electronica>> verPrueba(){
+		Iterable<Electronica> electronica = servicioElectronica.dameElectronica();
+		// return servicioProductos.dameProductos();
+		return new ResponseEntity<Iterable<Electronica>>(electronica, HttpStatus.OK);
+	}
 }
 
