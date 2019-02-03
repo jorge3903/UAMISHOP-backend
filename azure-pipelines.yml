@@ -23,6 +23,6 @@ steps:
 
 - task: AzureRmWebAppDeployment@3
   inputs:
-    azureSubscription: 'uam'
+    azureSubscription: 'uamishopBack - Service Endpoint'
     WebAppName: 'uamishopBack'
     Package: 'TsisProyecto/target/tutorial-spring-boot-0.1.0.war'
