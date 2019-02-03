@@ -159,4 +159,9 @@ public class LibroRestController {
 	public String p1(){
 		return "ya quedo";
 	}
+	
+	@RequestMapping(value = "/p2", method = RequestMethod.GET)
+	public String p2(){
+		return "ya quedo ahora si la liberacion continua";
+	}
 }
