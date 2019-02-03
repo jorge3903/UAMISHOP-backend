@@ -154,4 +154,9 @@ public class LibroRestController {
 		// return servicioProductos.dameProductos();
 		return new ResponseEntity<Iterable<Libro>>(libro, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/p1", method = RequestMethod.GET)
+	public String p1(){
+		return "ya quedo";
+	}
 }
