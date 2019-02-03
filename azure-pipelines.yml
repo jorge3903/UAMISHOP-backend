@@ -19,7 +19,7 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean package deploy'
+    goals: 'clean package'
 
 - task: AzureRmWebAppDeployment@3
   inputs:
