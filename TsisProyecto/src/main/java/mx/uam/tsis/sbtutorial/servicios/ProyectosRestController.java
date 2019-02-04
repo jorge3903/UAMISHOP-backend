@@ -82,10 +82,15 @@ public class ProyectosRestController {
 			if(servicioProyecto.agregarDueño(idUsuario, proyecto)) {
 				return new ResponseEntity<Proyectos>(proyecto, HttpStatus.CREATED);
 			}else {
+				servicioProyecto.eliminarProyecto(proyecto.getId());
+				fileStorageService.eliminaArchivo(archivo.getId());
+				proyecto=null;
 				return new ResponseEntity<Proyectos>(proyecto, HttpStatus.BAD_REQUEST);
 			}
 		}else {
 			//no se pudo crear el producto
+			fileStorageService.eliminaArchivo(archivo.getId());
+			proyecto=null;
 			return new ResponseEntity<Proyectos>(proyecto, HttpStatus.BAD_REQUEST);
 		}
     	}else {
@@ -145,5 +150,23 @@ public class ProyectosRestController {
 			return "ERROR. NO SE PUDO ELIMINAR EL PRODUCTO INDICADO";
 		}
 	}
+	
+	/**
+	 * Metodo para editar la informacion de un proyecto
+	 * @param idUsuario
+	 * @param idProducto
+	 * @param nombre
+	 * @param precio
+	 * @param descripcion
+	 * @param representante
+	 * @param requisitos
+	 * @return true si se edito bien o false si no
+	 */
+    @PostMapping("/modificaProyecto")
+	public boolean modificaProyecto(
+		@RequestParam Long idUsuario, @RequestParam Long idProducto, @RequestParam String nombre,
+		@RequestParam Double precio,@RequestParam String descripcion,@RequestParam String representante,@RequestParam String requisitos){
+        	return servicioProyecto.modificaProyecto(idUsuario, idProducto, nombre, precio, descripcion,representante,requisitos);
+    }
 }
 

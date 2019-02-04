@@ -200,4 +200,64 @@ public class ProductoRestController {
 		return productos;
 	}
 	
+	public class URL{
+		String url="";
+		public String getURL() {
+			return this.url;
+		}
+		public void setURL(String url) {
+			this.url = url;
+		}
+	}
+	
+	/**
+	 * Metodo para editar la imagen de un producto
+	 * @param idUsuario
+	 * @param idProducto
+	 * @param Archivo
+	 * @return el url del archivo si se edito bien o "false" si no
+	 */
+    @PostMapping("/modificaImg")
+	public URL modificaImagen(
+		@RequestParam Long idUsuario, @RequestParam Long idProducto, @RequestParam("file") MultipartFile file){
+    	String fileName = fileStorageService.storeFile(file);
+    	String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/")
+                .path(fileName)
+                .toUriString();
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/archivo/")
+                .path(fileName)
+                .toUriString();
+        Archivo archivo = fileStorageService.agregarArchivo(new Archivo(fileName, url, fileDownloadUri,
+                file.getContentType(), file.getSize()));
+        Archivo archAnterior = servicioProductos.modificaImagen(idUsuario,idProducto,archivo);
+        URL url1 = new URL();
+        if(archAnterior!=null) {
+        	fileStorageService.eliminaArchivo(archAnterior.getId());
+        	url1.setURL(url);
+        	return url1;
+        }else {
+        	fileStorageService.eliminaArchivo(archivo.getId());
+        	return url1;
+        }
+    }
+    
+    
+    /**
+	 * Metodo para editar la informacion de un producto
+	 * @param idUsuario
+	 * @param idProducto
+	 * @param nombre
+	 * @param precio
+	 * @param descropcion
+	 * @return true si se edito bien o false si no
+	 */
+    @PostMapping("/modificaProducto")
+	public boolean modificaProducto(
+		@RequestParam Long idUsuario, @RequestParam Long idProducto, @RequestParam String nombre,
+		@RequestParam Double precio,@RequestParam String descripcion){
+        	return servicioProductos.modificaProducto(idUsuario, idProducto, nombre, precio, descripcion);
+    }
+	
 }

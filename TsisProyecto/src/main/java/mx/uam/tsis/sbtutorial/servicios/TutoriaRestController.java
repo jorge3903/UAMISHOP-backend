@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,19 +13,16 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import mx.uam.tsis.sbtutorial.negocio.ArchivoService;
-import mx.uam.tsis.sbtutorial.negocio.LibroService;
-import mx.uam.tsis.sbtutorial.negocio.ProductoService;
-import mx.uam.tsis.sbtutorial.negocio.UsuarioService;
+import mx.uam.tsis.sbtutorial.negocio.TutoriaService;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Archivo;
-import mx.uam.tsis.sbtutorial.negocio.dominio.Libro;
-import mx.uam.tsis.sbtutorial.negocio.dominio.Producto;
+import mx.uam.tsis.sbtutorial.negocio.dominio.Tutoria;
 
 @CrossOrigin ( origins   =   {   "http://localhost:4200", "https://uamishop.azurewebsites.net"}) 
 @RestController
-public class LibroRestController {
+public class TutoriaRestController {
 
 	@Autowired
-	private LibroService servicioLibros;   
+	private TutoriaService servicioTutoria;   
     @Autowired
     private ArchivoService fileStorageService;
 	
@@ -40,10 +36,10 @@ public class LibroRestController {
 	 * @param descripcion
 	 * @return Estado de la entidad libro
 	 */
-    @PostMapping("/libros")
-	public ResponseEntity<Libro> agregarLibro(
+    @PostMapping("/tutorias")
+	public ResponseEntity<Tutoria> agregarTutoria(
 			@RequestParam String nombre, @RequestParam Double precio, 
-			@RequestParam String descripcion, @RequestParam("file") MultipartFile file,Long idUsuario){
+			@RequestParam String descripcion, @RequestParam("file") MultipartFile file,String area,Long idUsuario){
     	
     	if (idUsuario !=null) {
     	//se carga el nombre original del archivo y su extencion, ademas se guarda el 
@@ -70,34 +66,31 @@ public class LibroRestController {
                  file.getContentType(), file.getSize()));
          
          //se crea el producto con los datos
-         Libro libro= new Libro(nombre, precio, descripcion, archivo);
+         Tutoria tutoria= new Tutoria(nombre, precio, descripcion, archivo,area);
          
          if(archivo == null) {
         	 //si no se pudo crear el archivo tampoco se podra crear el producto
-        	 return new ResponseEntity<Libro>(libro, HttpStatus.BAD_REQUEST);
+        	 return new ResponseEntity<Tutoria>(tutoria, HttpStatus.BAD_REQUEST);
          }
          
-    	
-		if(servicioLibros.agregarLibro(libro) != null) {
 			//se ha creado correctamente el producto
-			if(servicioLibros.agregarDueño(idUsuario, libro)) {
-				return new ResponseEntity<Libro>(libro, HttpStatus.CREATED);
-			}else { 
-				servicioLibros.eliminarLibro(libro.getId());
+        if(servicioTutoria.agregarTutoria(tutoria) != null) {
+        	if(servicioTutoria.agregarDueño(idUsuario, tutoria)) {
+        		return new ResponseEntity<Tutoria>(tutoria, HttpStatus.CREATED);
+        	}else { 
+        		servicioTutoria.eliminarTutoria(tutoria.getId());
 				fileStorageService.eliminaArchivo(archivo.getId());
-				libro=null;
-				return new ResponseEntity<Libro>(libro, HttpStatus.BAD_REQUEST);
-			}
-		}
-		else {
-			//no se pudo crear el producto
-			fileStorageService.eliminaArchivo(archivo.getId());
-			libro=null;
-			return new ResponseEntity<Libro>(libro, HttpStatus.BAD_REQUEST);
-		}
+				tutoria=null;
+        		return new ResponseEntity<Tutoria>(tutoria, HttpStatus.BAD_REQUEST);
+        	}
+        }else {
+        	fileStorageService.eliminaArchivo(archivo.getId());
+        	tutoria=null;
+   		 	return new ResponseEntity<Tutoria>(tutoria, HttpStatus.BAD_REQUEST);
+   	 	}
     	}else {
-    		Libro lib=null;
-    		return new ResponseEntity<Libro>(lib, HttpStatus.BAD_REQUEST);
+    		Tutoria tut=null;
+    		return new ResponseEntity<Tutoria>(tut, HttpStatus.BAD_REQUEST);
     	}
 	}
 	
@@ -105,57 +98,27 @@ public class LibroRestController {
 	 *  Metodo para obtener todos los libros de la API
 	 * @return lista de todos los productos
 	 */
-	@RequestMapping(value = "/libros", method = RequestMethod.GET)
-	public ResponseEntity<Iterable<Libro>> dameLibros(){
-		Iterable<Libro> libro = servicioLibros.dameLibros();
+	@RequestMapping(value = "/tutorias", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<Tutoria>> dameTutorias(){
+		Iterable<Tutoria> tutorias = servicioTutoria.dameTutorias();
 		// return servicioProductos.dameProductos();
-		return new ResponseEntity<Iterable<Libro>>(libro, HttpStatus.OK);
+		return new ResponseEntity<Iterable<Tutoria>>(tutorias, HttpStatus.OK);
 	}
 	
 	/**
-	 * Metodo para obtener todos los libros de la API por CATEGORIA
-	 * @param categoria
-	 * @return lista de Productos con esa categoria
+	 * Metodo para editar la informacion de una tutoria
+	 * @param idUsuario
+	 * @param idProducto
+	 * @param nombre
+	 * @param precio
+	 * @param descripcion
+	 * @param area
+	 * @return true si se edito bien o false si no
 	 */
-	/*@RequestMapping(value = "/productos/categorias/{cat}", method = RequestMethod.GET)
-	public Iterable<Producto> dameProductosByCategoria(@PathVariable String cat){
-		return servicioProductos.dameProductosByCategoria(cat);
-	}*/
-	
-	/**
-	 * NO IMPLEMENTADO
-	 * Metodo para editar un libro
-	 * @param idLibro
-	 * @return
-	 */
-	@RequestMapping(value = "/libros/{idlibro}", method = RequestMethod.PUT)
-	public String actulizarLibro(@PathVariable Long idLibro){
-		if(servicioLibros.actualizarLibro(idLibro)) {
-			return "OK. PRODUCTO ACTUALIZADO CORRECTAMENTE";
-		}
-		else {
-			return "ERROR. NO SE PUDO ACTUALIZAR EL PRODUCTO INDICADO";
-		}
-	}
-	
-	/**
-	 * Metodo para eliminar un libro de la API
-	 * @param idLibro
-	 * @return Mensaje con el resultado obtenido para el libro
-	 */
-	@RequestMapping(value = "/libros/{idLibro}", method = RequestMethod.DELETE)
-	public String eliminarLibro(@PathVariable Long idLibro){
-		if(servicioLibros.eliminarLibro(idLibro)) {
-			return "OK. PRODUCTO ELIMINADO CORRECTAMENTE";
-		}
-		else {
-			return "ERROR. NO SE PUDO ELIMINAR EL PRODUCTO INDICADO";
-		}
-	}
-	
-	@RequestMapping(value = "/ropa", method = RequestMethod.GET)
-	public String prueba(){
-		return "Ya quedo";
-	}
-
+    @PostMapping("/modificaTutoria")
+	public boolean modificaTutoria(
+		@RequestParam Long idUsuario, @RequestParam Long idProducto, @RequestParam String nombre,
+		@RequestParam Double precio,@RequestParam String descripcion,@RequestParam String area){
+        	return servicioTutoria.modificaTutoria(idUsuario, idProducto, nombre, precio, descripcion,area);
+    }
 }

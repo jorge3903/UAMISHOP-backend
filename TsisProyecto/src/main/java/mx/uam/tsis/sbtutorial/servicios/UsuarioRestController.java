@@ -30,7 +30,7 @@ public class UsuarioRestController {
 	@Autowired
 	private UsuarioService servicioUsuarios;
 	
-	//mapeos para los json de la web
+	//mapeos para los json de la web nuevo
 	
 	/**
 	 * Metodo para agregar un usuario a la API
@@ -110,6 +110,23 @@ public class UsuarioRestController {
 			return false;
 		}
 	}
+	
+	/**
+	 * Metodo para editar a un usuario de la BD
+	 * @param 
+	 * @return regresa al usuario si se edito correctamente, null si no
+	 */
+	@RequestMapping(value = "/usuarios", method = RequestMethod.PUT)
+	public Usuario editaUsuario(@RequestParam Long idUsuario,@RequestParam String telefono){
+		Usuario usuario=servicioUsuarios.editaUsuario(idUsuario,telefono);
+		if(usuario!=null) {
+			return usuario;
+		}
+		else {
+			return null;
+		}
+	}
+	
 	
 	
 }

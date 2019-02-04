@@ -80,10 +80,15 @@ public class ElectronicaRestController  {
 			if(servicioElectronica.agregarDueño(idUsuario, electronica)) {
 				return new ResponseEntity<Electronica>(electronica, HttpStatus.OK);
 			}else {
+				servicioElectronica.eliminarElectronica(electronica.getId());
+				fileStorageService.eliminaArchivo(archivo.getId());
+				electronica=null;
 				return new ResponseEntity<Electronica>(electronica, HttpStatus.BAD_REQUEST);
 			}
 		}else {
 			//no se pudo crear el producto
+			fileStorageService.eliminaArchivo(archivo.getId());
+			electronica=null;
 			return new ResponseEntity<Electronica>(electronica, HttpStatus.BAD_REQUEST);
 		}
     	}else {
@@ -142,13 +147,6 @@ public class ElectronicaRestController  {
 		else {
 			return "ERROR. NO SE PUDO ELIMINAR EL PRODUCTO INDICADO";
 		}
-	}
-	
-	@RequestMapping(value = "/cd", method = RequestMethod.GET)
-	public ResponseEntity<Iterable<Electronica>> verPrueba(){
-		Iterable<Electronica> electronica = servicioElectronica.dameElectronica();
-		// return servicioProductos.dameProductos();
-		return new ResponseEntity<Iterable<Electronica>>(electronica, HttpStatus.OK);
 	}
 }
 
