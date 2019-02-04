@@ -22,9 +22,13 @@ public class LibroService {
 	
 	public boolean agregarDueño(long idUsuario,Libro libro) {
 		Usuario usuario = servicioUsuario.agregarProducto(idUsuario, libro);
-		libro.setUsuario(usuario);
-		if(repository.save(libro)!=null) {
-			return true;
+		if(usuario!=null) {
+			libro.setUsuario(usuario);
+			if(repository.save(libro)!=null) {
+				return true;
+			}else {
+				return false;
+			}
 		}else {
 			return false;
 		}
@@ -41,8 +45,8 @@ public class LibroService {
 	}
 
 	public boolean eliminarLibro(Long idLibro) {
-		// TODO Auto-generated method stub
-		return false;
+		repository.delete(idLibro);
+		return true;
 	}
 	
 	public Libro LibroById(Long idLibro) {

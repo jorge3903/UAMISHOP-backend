@@ -23,9 +23,13 @@ public class ElectronicaService {
 	
 	public boolean agregarDueño(long idUsuario,Electronica electronica) {
 		Usuario usuario = servicioUsuario.agregarProducto(idUsuario, electronica);
-		electronica.setUsuario(usuario);
-		if(repository.save(electronica)!=null) {
-			return true;
+		if(usuario!=null) {
+			electronica.setUsuario(usuario);
+			if(repository.save(electronica)!=null) {
+				return true;
+			}else {
+				return false;
+			}
 		}else {
 			return false;
 		}
@@ -42,8 +46,8 @@ public class ElectronicaService {
 	}
 
 	public boolean eliminarElectronica(Long idElectronica) {
-		// TODO Auto-generated method stub
-		return false;
+		repository.delete(idElectronica);
+		return true;
 	}
 	
 	public Electronica ElectronicaById(Long idElectronica) {

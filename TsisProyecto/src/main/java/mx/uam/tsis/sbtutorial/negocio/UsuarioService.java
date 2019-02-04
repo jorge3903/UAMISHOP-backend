@@ -26,10 +26,14 @@ public class UsuarioService {
 	
 	public Usuario agregarProducto(Long idUsuario,Producto producto) {
 		Usuario usuario = repository.findOne(idUsuario);
-		Collection<Long> productos = usuario.getProductos();
-		if(productos.add(producto.getId())) {
-			if(repository.save(usuario)!=null) {
-				return usuario;
+		if(usuario!=null) {
+			Collection<Long> productos = usuario.getProductos();
+			if(productos.add(producto.getId())) {
+				if(repository.save(usuario)!=null) {
+					return usuario;
+				}else {
+					return null;
+				}
 			}else {
 				return null;
 			}
@@ -44,13 +48,19 @@ public class UsuarioService {
 		return repository.findAll();
 	}
 
-	public Usuario actualizarUsuario(Usuario usuario) {
+	public Usuario editaUsuario(Long idUsuario,String telefono) {
 		// TODO Auto-generated method stub
-		if(repository.save(usuario) != null) {
-			return usuario;
+		Usuario usuario=repository.findOne(idUsuario);
+		if(usuario!= null) {
+			usuario.setTelefono(telefono);
+			if(repository.save(usuario)!=null) {
+				return usuario;
+			}else {
+				return null;
+			}
+		}else {
+			return null;
 		}
-		
-		return null;
 	}
 
 	public boolean eliminarUsuario(Long idUsuario) {
@@ -73,15 +83,15 @@ public class UsuarioService {
 
 	public Usuario usuarioById(Long idUsuario) {
 		// TODO Auto-generated method stub
-		
-		for(Usuario usuarioActual : repository.findAll()) {
+		return repository.findOne(idUsuario);
+		/**for(Usuario usuarioActual : repository.findAll()) {
 			
 			if (usuarioActual.getId() == idUsuario ){
 				return usuarioActual;
 			}
 	    }
 		
-		return null;
+		return null;**/
 	}
 	
 	public Usuario usuarioByCorreo(String correo) {

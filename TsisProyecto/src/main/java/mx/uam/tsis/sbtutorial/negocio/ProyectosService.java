@@ -22,9 +22,13 @@ public class ProyectosService {
 		
 		public boolean agregarDueño(long idUsuario,Proyectos proyecto) {
 			Usuario usuario = servicioUsuario.agregarProducto(idUsuario, proyecto);
-			proyecto.setUsuario(usuario);
-			if(repository.save(proyecto)!=null) {
-				return true;
+			if(usuario!=null) {
+				proyecto.setUsuario(usuario);
+				if(repository.save(proyecto)!=null) {
+					return true;
+				}else {
+					return false;
+				}
 			}else {
 				return false;
 			}
@@ -34,15 +38,40 @@ public class ProyectosService {
 			// TODO Auto-generated method stub
 			return repository.save(pys);
 		}
+		
+		public boolean modificaProyecto(Long idUsuario,Long idProyecto,String nombre,Double precio,String descripcion,String representante,String requisitos) {
+			Usuario usuario = servicioUsuario.usuarioById(idUsuario);
+			if(usuario!= null) {
+				for(Long idProd:usuario.getProductos()) {
+					if(idProd == idProyecto) {
+						Proyectos proyecto= repository.findOne(idProyecto);
+						if(proyecto!=null) {
+							proyecto.setNombre(nombre);
+							proyecto.setPrecio(precio);
+							proyecto.setDescripcion(descripcion);
+							proyecto.setRepresentante(representante);
+							proyecto.setRequisitos(requisitos);
+							repository.save(proyecto);
+							return true;
+						}else {
+							return false;
+						}
+					}
+				}
+				return false;
+			}else {
+				return false;
+			}
+		}
 
 		public boolean actualizarProyecto(Long idpys) {
 			// TODO Auto-generated method stub
 			return false;
 		}
 
-		public boolean eliminarProyecto(Long idpys) {
-			// TODO Auto-generated method stub
-			return false;
+		public boolean eliminarProyecto(Long idProyecto) {
+			repository.delete(idProyecto);
+			return true;
 		}
 		
 		public Proyectos ProyectoById(Long idpys) {

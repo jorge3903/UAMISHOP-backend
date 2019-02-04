@@ -79,6 +79,11 @@ public class ArchivoService {
 	public Archivo agregarArchivo(Archivo archivo) {
 		return repository.save(archivo);
 	}
+	
+	public boolean eliminaArchivo(Long idArchivo) {
+		repository.delete(idArchivo);
+		return true;
+	}
 
 	public Archivo archivoById(Long idArchivo) {
 		// TODO Auto-generated method stub

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import mx.uam.tsis.sbtutorial.datos.ProductoRepository;
 import mx.uam.tsis.sbtutorial.datos.UsuarioRepository;
+import mx.uam.tsis.sbtutorial.negocio.dominio.Archivo;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Producto;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Usuario;
 
@@ -180,6 +181,51 @@ public class ProductoService {
 	    }
 		
 		return null;
+	}
+	
+	public Archivo modificaImagen(Long idUsuario,Long idProducto,Archivo archivo) {
+		Usuario usuario = repositoryUsuario.findOne(idUsuario);
+		if(usuario!= null) {
+			for(Long idProd:usuario.getProductos()) {
+				if(idProd == idProducto) {
+					Producto producto= repository.findOne(idProducto);
+					if(producto!=null) {
+						Archivo archAnterior =producto.getArchivo();
+						producto.setArchivo(archivo);
+						repository.save(producto);
+						return archAnterior;
+					}else {
+						return null;
+					}
+				}
+			}
+			return null;
+		}else {
+			return null;
+		}
+	}
+	
+	public boolean modificaProducto(Long idUsuario,Long idProducto,String nombre,Double precio,String descripcion) {
+		Usuario usuario = repositoryUsuario.findOne(idUsuario);
+		if(usuario!= null) {
+			for(Long idProd:usuario.getProductos()) {
+				if(idProd == idProducto) {
+					Producto producto= repository.findOne(idProducto);
+					if(producto!=null) {
+						producto.setNombre(nombre);
+						producto.setPrecio(precio);
+						producto.setDescripcion(descripcion);
+						repository.save(producto);
+						return true;
+					}else {
+						return false;
+					}
+				}
+			}
+			return false;
+		}else {
+			return false;
+		}
 	}
 
 	/*public Iterable<Producto> dameProductosByCategoria(String categoria) {
