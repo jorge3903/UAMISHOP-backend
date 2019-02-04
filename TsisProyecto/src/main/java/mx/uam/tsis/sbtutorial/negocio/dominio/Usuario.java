@@ -192,6 +192,5 @@ public class Usuario implements Serializable{
 	public void setProductos(Collection<Long> productos) {
 		this.productos = productos;
 	}
-	
 
 }
