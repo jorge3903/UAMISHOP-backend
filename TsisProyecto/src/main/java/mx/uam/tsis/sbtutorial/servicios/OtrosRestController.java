@@ -26,7 +26,7 @@ public class OtrosRestController {
     @Autowired
     private ArchivoService fileStorageService;
 	
-	//mapeos para los json de la web
+	//mapeos para los json de la web cambio de prueba
 	
 	/**
 	 * Metodo para agregar un producto de la categoria "otros" con su archivo a la API
