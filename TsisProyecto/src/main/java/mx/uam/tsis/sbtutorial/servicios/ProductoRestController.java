@@ -154,7 +154,7 @@ public class ProductoRestController {
 	 * @param idProducto
 	 * @return
 	 */
-	@RequestMapping(value = "/productos/{idProducto}", method = RequestMethod.PUT)
+	/**@RequestMapping(value = "/productos/{idProducto}", method = RequestMethod.PUT)
 	public String actulizarProducto(@PathVariable Long idProducto){
 		if(servicioProductos.actualizarProducto(idProducto)) {
 			return "OK. PRODUCTO ACTUALIZADO CORRECTAMENTE";
@@ -162,7 +162,7 @@ public class ProductoRestController {
 		else {
 			return "ERROR. NO SE PUDO ACTUALIZAR EL PRODUCTO INDICADO";
 		}
-	}
+	}**/
 	
 	/**
 	 *  Metodo para obtener el producto con el ID especificado
