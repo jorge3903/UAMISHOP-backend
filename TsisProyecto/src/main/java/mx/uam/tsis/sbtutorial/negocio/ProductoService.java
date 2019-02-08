@@ -171,16 +171,7 @@ public class ProductoService {
      * @return  Producto
      */
 	public Producto ProductoById(Long idProducto) {
-		// TODO Auto-generated method stub
-		
-		for(Producto productoActual : repository.findAll()) {
-			
-			if (productoActual.getId() == idProducto ){
-				return productoActual;
-			}
-	    }
-		
-		return null;
+		return repository.findOne(idProducto);
 	}
 	
 	public Archivo modificaImagen(Long idUsuario,Long idProducto,Archivo archivo) {
