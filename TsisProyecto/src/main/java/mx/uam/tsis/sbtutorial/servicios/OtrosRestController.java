@@ -98,9 +98,9 @@ public class OtrosRestController {
 		return new ResponseEntity<Iterable<Otros>>(otro, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/p1", method = RequestMethod.GET)
+	/**@RequestMapping(value = "/p1", method = RequestMethod.GET)
 	public String pru1(){
 		//solo para pro
 		return "Hola mundo concurrente";
-	}
+	}**/
 }
