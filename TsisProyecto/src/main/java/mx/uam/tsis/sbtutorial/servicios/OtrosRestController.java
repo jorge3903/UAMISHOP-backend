@@ -97,7 +97,7 @@ public class OtrosRestController {
 		Iterable<Otros> otro = servicioOtros.dameOtros();
 		return new ResponseEntity<Iterable<Otros>>(otro, HttpStatus.OK);
 	}
-	
+	//ya se guarda en github
 	/**@RequestMapping(value = "/p1", method = RequestMethod.GET)
 	public String pru1(){
 		//solo para pro
