@@ -34,7 +34,7 @@ public class Producto implements Serializable{
 	private Double calificacion;
 	@OneToOne
 	@JoinColumn(name="idUsuario")
-	//@Column(name="usuario")
+	@Column(name="usuario")
 	private Usuario usuario;
 	@ManyToOne
 	@JoinColumn(name="idArchivo")
