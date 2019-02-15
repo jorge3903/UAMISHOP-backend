@@ -78,8 +78,8 @@ public class ProductoService {
 	
 	public boolean agregarEnFavoritos(Long idUsuario,Long idProducto) {
 		Producto prod=repository.findOne(idProducto);
+		Usuario usuario = repositoryUsuario.findOne(idUsuario);
 		if(prod!=null) {
-			Usuario usuario = repositoryUsuario.findOne(idUsuario);
 			if(usuario!=null) {
 				Collection<Long> fav = usuario.getFavoritos();
 				for(Long favorito:fav) {
