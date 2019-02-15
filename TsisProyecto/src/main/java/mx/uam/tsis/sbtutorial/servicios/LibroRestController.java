@@ -155,7 +155,7 @@ public class LibroRestController {
 	
 	@RequestMapping(value = "/ropa", method = RequestMethod.GET)
 	public String prueba(){
-		return "Ya quedo";
+		return "Ya quedo en servidor linux";
 	}
 
 }
