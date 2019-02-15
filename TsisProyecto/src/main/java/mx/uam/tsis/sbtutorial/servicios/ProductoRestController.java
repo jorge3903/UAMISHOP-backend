@@ -40,7 +40,7 @@ public class ProductoRestController {
     @Autowired
     private ArchivoService fileStorageService;
 	
-	//mapeos para los json de la web
+	//mapeos para los json de la web verdad
 	
 	/**
 	 * Metodo para agregar un producto con su archivo a la API
