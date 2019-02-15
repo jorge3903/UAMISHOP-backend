@@ -153,9 +153,9 @@ public class LibroRestController {
 		}
 	}
 	
-	@RequestMapping(value = "/ropa", method = RequestMethod.GET)
+	@RequestMapping(value = "/pru", method = RequestMethod.GET)
 	public String prueba(){
-		return "Ya quedo en servidor linux";
+		return "Ya quedo en servidor linux y Continua liberación";
 	}
 
 }
