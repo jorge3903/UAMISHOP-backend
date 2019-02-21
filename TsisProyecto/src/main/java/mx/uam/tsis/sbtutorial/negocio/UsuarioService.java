@@ -74,7 +74,7 @@ public class UsuarioService {
 			}
 			repository.delete(idUsuario);
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
