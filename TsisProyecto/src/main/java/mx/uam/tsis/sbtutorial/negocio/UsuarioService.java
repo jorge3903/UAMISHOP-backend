@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import mx.uam.tsis.sbtutorial.datos.ProductoRepository;
 import mx.uam.tsis.sbtutorial.datos.UsuarioRepository;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Producto;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Usuario;
@@ -12,6 +13,8 @@ import mx.uam.tsis.sbtutorial.negocio.dominio.Usuario;
 @Service
 public class UsuarioService {
 
+	@Autowired
+	private ProductoRepository repositoryProductos;
 	@Autowired
 	private UsuarioRepository repository;
 
@@ -64,8 +67,16 @@ public class UsuarioService {
 	}
 
 	public boolean eliminarUsuario(Long idUsuario) {
-		// TODO Auto-generated method stub
-		return false;
+		Usuario usuario = repository.findOne(idUsuario);
+		if ( usuario != null) {
+			for(Long idProducto:usuario.getProductos()) {
+				repositoryProductos.delete(idProducto);
+			}
+			repository.delete(idUsuario);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**public Usuario validaUsuario(String correo, String contraseña) {

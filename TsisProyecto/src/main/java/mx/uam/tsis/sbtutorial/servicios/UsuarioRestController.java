@@ -97,16 +97,15 @@ public class UsuarioRestController {
 	}*/
 	
 	/**
-	 * Metodo para borrar a un usuario de la BD
+	 * Método para borrar a un usuario de la BD
 	 * @param usuario
-	 * @return regresa true si se elimino correctamente, false si no
+	 * @return true si se elimino correctamente, false si no
 	 */
 	@RequestMapping(value = "/usuarios/{idUsuario}", method = RequestMethod.DELETE)
 	public boolean eliminarUsuario(@PathVariable Long idUsuario){
 		if(servicioUsuarios.eliminarUsuario(idUsuario)) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
