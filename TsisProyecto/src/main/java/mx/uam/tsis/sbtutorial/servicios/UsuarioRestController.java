@@ -127,5 +127,22 @@ public class UsuarioRestController {
 	}
 	
 	
+	/**
+	 * Método para calificar a un usuario
+	 * @param idUsuario
+	 * @param idUsuarioAcalificar
+	 * @params calificacion
+	 * @return  colleccion de string con los usuarios y sus calificaciones
+	 */
+	@PostMapping(value = "/calificaUsuario")
+	public ResponseEntity<Collection<String>> calificarUsuario(@RequestParam Long idUsuario,@RequestParam Long idUsuarioAcalificar,@RequestParam Double calificacion ){
+		if (idUsuario != idUsuarioAcalificar) {
+			Collection<String> calificaciones = servicioUsuarios.calificaUsuario(idUsuario,idUsuarioAcalificar, calificacion);
+			return new ResponseEntity<Collection<String>>(calificaciones, HttpStatus.OK);
+		} else {
+			Collection<String> calificaciones = null;
+			return new ResponseEntity<Collection<String>>(calificaciones, HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 }

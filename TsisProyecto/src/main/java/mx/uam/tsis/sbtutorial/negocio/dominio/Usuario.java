@@ -31,8 +31,9 @@ public class Usuario implements Serializable{
 	private String correo;
 	@Column(name="telefono")
 	private String telefono;
+	@ElementCollection
 	@Column(name="calificcion")
-	private double calificacion;
+	private Collection<String> calificacion;
 	@ManyToOne
 	@JoinColumn(name="idArchivo")
 	private Archivo fotoPerfil;
@@ -133,7 +134,7 @@ public class Usuario implements Serializable{
 	 * Recupera el Telefono del usuario
 	 * @return telefono
 	 */
-	public double getCalificacion() {
+	public Collection<String> getCalificacion() {
 		return calificacion;
 	}
 	
@@ -141,7 +142,7 @@ public class Usuario implements Serializable{
 	 * Actualiza el Telefono del usuario
 	 * @param telefono
 	 */
-	public void setCalificacion(double calificacion) {
+	public void setCalificacion(Collection<String> calificacion) {
 		this.calificacion = calificacion;
 	}
 	

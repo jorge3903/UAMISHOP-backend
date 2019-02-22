@@ -1,5 +1,6 @@
 package mx.uam.tsis.sbtutorial.negocio;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,37 @@ public class UsuarioService {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	public Collection<String> calificaUsuario(Long idUsuario,Long idUsuarioAcalificar, Double cal){
+		Usuario usuario = repository.findOne(idUsuarioAcalificar);
+		Usuario calificador = repository.findOne(idUsuario);
+		if ( usuario == null || calificador == null) {
+			return null;
+		} else {
+			Collection<String> calificaciones = usuario.getCalificacion();
+			Collection<String> nuevasCalif = new ArrayList<String>();
+			String[] partes;
+			String calif;
+			Boolean bandera= false;
+			for (String calificacion: calificaciones) {
+				partes = calificacion.split("-");
+				if(Long.parseLong(partes[0]) == idUsuario) {
+					calif = idUsuario+"-"+cal;
+					nuevasCalif.add(calif);
+					bandera= true;
+				} else {
+					nuevasCalif.add(calificacion);
+				}
+			}
+			if(!bandera) {
+				calif=idUsuario+"-"+cal;
+				nuevasCalif.add(calif);
+			}
+			usuario.setCalificacion(nuevasCalif);
+			repository.save(usuario);
+			return nuevasCalif;
 		}
 	}
 
