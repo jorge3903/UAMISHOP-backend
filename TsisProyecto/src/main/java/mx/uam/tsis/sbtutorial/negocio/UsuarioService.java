@@ -48,7 +48,6 @@ public class UsuarioService {
 
 	public Collection<Usuario> dameUsuarios() {
 		// TODO Auto-generated method stub
-		
 		return repository.findAll();
 	}
 
