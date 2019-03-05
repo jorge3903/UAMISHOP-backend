@@ -1,21 +1,32 @@
 package mx.uam.tsis.sbtutorial.negocio;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import mx.uam.tsis.sbtutorial.datos.ProductoRepository;
 import mx.uam.tsis.sbtutorial.datos.UsuarioRepository;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Archivo;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Producto;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Usuario;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Properties;
+
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProductoService {
@@ -25,6 +36,8 @@ public class ProductoService {
 	@Autowired
 	private UsuarioRepository repositoryUsuario;
 
+	
+	
 	/**
      * Metodo del negocio que regresa todos los productos de la BD
      * @param 
@@ -165,6 +178,40 @@ public class ProductoService {
 		}
 	}
 	
+	public boolean eliminarProductoIlegal(Long idProducto) {
+		Producto product = repository.findOne(idProducto);
+		if(product != null) {
+			Usuario user = product.getUsuario();
+			if ( user != null) {
+				ArrayList<Long> productos= new ArrayList<Long>();
+				int cont =0;
+				for(Long idprod:user.getProductos()) {
+					if(idprod == idProducto) {
+						repository.delete(idProducto);
+						cont = 1;
+					} else {
+						productos.add(idprod);
+					}
+				}
+				user.setProductos(productos);
+				repositoryUsuario.save(user);
+				if ( cont ==1) {
+					if(this.enviarCorreo(product)) {
+						return true;
+					}else {
+						return false;
+					}
+				} else {
+					return false;
+				}
+			}else {
+				return false;
+			}
+		}else {
+			return false;
+		}
+	}
+	
 	/**
      * Metodo del negocio que regresa el producto especificado de la BD
      * @param   idProducto
@@ -215,6 +262,54 @@ public class ProductoService {
 			}
 			return false;
 		}else {
+			return false;
+		}
+	}
+	
+	
+	//correo
+	
+	public boolean enviarCorreo(Producto product) {
+		try {
+			Properties p= new Properties();
+			p.put("mail.smtp.host", "smtp.gmail.com");
+			p.setProperty("mail.smtp.starttls.enable","true" );
+			p.setProperty("mail.smtp.port", "587");
+			p.setProperty("mail.smtp.user", "uamishopp@gmail.com");
+			p.setProperty("mail.smtp.auth", "true");
+			
+			Session s=Session.getDefaultInstance(p,null);
+			BodyPart texto= new MimeBodyPart();
+			String men="\" se ha eliminado de UAMIShop ya que se considera inapropiado para esta tienda."
+					+ "Te pedimos de favor no volver a subir este producto ni otros similares, recuerda que es una tienda de productos y "
+					+ "servicios para nuestra querida universidad UAMI y fue creada con el único propósito de beneficiar a la misma y a sus integrantes."
+					+ "\n\nPor tu comprensión gracias.\nAtentamente: El grupo de desarrollo de UAMIShop.";
+			texto.setText("Tu producto \""+product.getNombre()+men);
+			//BodyPart adjunto = new MimeBodyPart();
+			
+			//if(!c.getRutaArchivo().equals("")) {
+				//adjunto.setDataHandler(new DataHandler(new FileDataSource(c.getRutaArchivo())));
+				//adjunto.setFileName(c.getNombreArchivo());
+			//}
+			MimeMultipart m = new MimeMultipart();
+			m.addBodyPart(texto);
+			
+			//if(!c.getRutaArchivo().equals("")) {
+				//m.addBodyPart(adjunto);
+			//}
+			MimeMessage mensaje=new MimeMessage(s);
+			mensaje.setFrom(new InternetAddress("uamishopp@gmail.com"));
+			mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(product.getUsuario().getCorreo()));
+			mensaje.setSubject("Tu producto \""+product.getNombre()+"\" ha sido borrado de UAMIShop");
+			mensaje.setContent(m);
+			
+			Transport t = s.getTransport("smtp");
+			t.connect("uamishopp@gmail.com","zmoyuejlsoppgiol");
+			t.sendMessage(mensaje, mensaje.getAllRecipients());
+			t.close();
+			return true;
+		}catch(Exception e) {
+			System.out.println("Error"+e);
 			return false;
 		}
 	}

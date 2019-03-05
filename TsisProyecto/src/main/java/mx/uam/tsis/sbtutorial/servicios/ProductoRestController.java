@@ -200,6 +200,19 @@ public class ProductoRestController {
 		return productos;
 	}
 	
+	
+	/**
+	 * Metodo para eliminar un producto que consideramos ilegal 
+	 * @param idProducto
+	 * @return True si se elimino correctamente, false si no
+	 */
+	@RequestMapping(value = "/bpi/{idProducto}", method = RequestMethod.DELETE)
+	public boolean eliminarProductoIlegal(@PathVariable Long idProducto){
+		boolean estado = servicioProductos.eliminarProductoIlegal(idProducto);
+		return estado;
+	}
+	
+	
 	public class URL{
 		String url="";
 		public String getURL() {
