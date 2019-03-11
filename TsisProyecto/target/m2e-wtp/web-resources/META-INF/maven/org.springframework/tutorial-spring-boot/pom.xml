@@ -34,12 +34,15 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
-        
         <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+</dependency> 
+        <!-- <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.179</version>
-        </dependency>
+        </dependency> -->
         <!-- 
         <dependency>
   			<groupId>org.springframework.boot</groupId>
@@ -64,8 +67,8 @@
 	<packaging>war</packaging>
 	<distributionManagement>
    <repository>
-      <id>uamb</id>
-        <url>https://uamb.azurewebsites.net</url>
+      <id>uamishopBack</id>
+        <url>https://uamishopBack.azurewebsites.net</url>
    </repository>
 </distributionManagement>
 

@@ -1,29 +1,41 @@
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/UsuarioService.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/property/FileStorageProperties.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/ElectronicaRepository.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/ElectronicaRestController.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/exception/FileStorageException.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Proyectos.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Producto.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/UsuarioRestController.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/ProyectosService.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/ProductoRestController.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Usuario.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/ProductoService.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/LibroRepository.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/ProyectosRepository.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/UsuarioRepository.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/Application.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/ArchivoService.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Electronica.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/exception/MyFileNotFoundException.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/ProductoRepository.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/ElectronicaService.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/ProyectosRestController.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/LibroService.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Libro.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/presentacion/PaginaController.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/ArchivoRepository.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/ArchivoRestController.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/LibroRestController.java
-/home/jorge/git/UAMIshop-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Archivo.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/property/FileStorageProperties.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/LibroRepository.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/TutoriaRestController.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Electronica.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/UsuarioRestController.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/UsuarioRepository.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/ArchivoService.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/ProyectosService.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/DepartamentoService.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Producto.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/ProyectosRestController.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/LibroRestController.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/TutoriaRepository.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/exception/FileStorageException.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/Application.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Proyectos.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/exception/MyFileNotFoundException.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/ElectronicaRestController.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Tutoria.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/OtrosRestController.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/TutoriaService.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/UsuarioService.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/ProyectosRepository.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/ElectronicaRepository.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Usuario.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/ArchivoRepository.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/presentacion/PaginaController.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/DepartamentoRepository.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/ProductoRepository.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Archivo.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Otros.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/DepartamentoRestController.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/datos/OtrosRepository.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Departamento.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/OtrosService.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/ProductoService.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/ArchivoRestController.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/servicios/ProductoRestController.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/ElectronicaService.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/LibroService.java
+/media/jorge/Archivos/Documentos/uam/11 trimestre/Proyecto terminal 2/git-backend/UAMISHOP-backend/TsisProyecto/src/main/java/mx/uam/tsis/sbtutorial/negocio/dominio/Libro.java
