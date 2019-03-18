@@ -109,6 +109,17 @@ public class ElectronicaRestController  {
 	}
 	
 	/**
+	 *  Metodo para obtener todos los Productos electronicos de la API por pagina
+	 * @return lista de todos los productos de la pagina
+	 */
+	@RequestMapping(value = "/electronicaPorPagina", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<Electronica>> electronicaPorPagina(@RequestParam int pagina,@RequestParam int elementos){
+		Iterable<Electronica> electronica = servicioElectronica.electronicaPorPagina(pagina, elementos);
+		// return servicioProductos.dameProductos();
+		return new ResponseEntity<Iterable<Electronica>>(electronica, HttpStatus.OK);
+	}
+	
+	/**
 	 * Metodo para obtener todos los Productos electronicos de la API por CATEGORIA
 	 * @param categoria
 	 * @return lista de Productos con esa categoria

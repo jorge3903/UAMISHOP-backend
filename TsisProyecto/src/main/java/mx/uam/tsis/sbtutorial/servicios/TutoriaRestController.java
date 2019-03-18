@@ -106,6 +106,17 @@ public class TutoriaRestController {
 	}
 	
 	/**
+	 *  Metodo para obtener todos los libros de la API por pagina
+	 * @return lista de todos los productos de la pagina
+	 */
+	@RequestMapping(value = "/tutoriasPorPagina", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<Tutoria>> tutoriasPorPagina(@RequestParam int pagina,@RequestParam int elementos){
+		Iterable<Tutoria> tutorias = servicioTutoria.tutoriaPorPagina(pagina, elementos);
+		// return servicioProductos.dameProductos();
+		return new ResponseEntity<Iterable<Tutoria>>(tutorias, HttpStatus.OK);
+	}
+	
+	/**
 	 * Metodo para editar la informacion de una tutoria
 	 * @param idUsuario
 	 * @param idProducto

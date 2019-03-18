@@ -111,6 +111,17 @@ public class ProyectosRestController {
 	}
 	
 	/**
+	 *  Metodo para obtener todos los Proyectos de la API por pagina
+	 * @return lista de todos los productos ce la pagina
+	 */
+	@RequestMapping(value = "/proyectosPorPagina", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<Proyectos>> proyectosdePagina(@RequestParam int pagina,@RequestParam int elementos){
+		Iterable<Proyectos> proyecto = servicioProyecto.proyectosPorPagina(pagina, elementos);
+		// return servicioProductos.dameProductos();
+		return new ResponseEntity<Iterable<Proyectos>>(proyecto, HttpStatus.OK);
+	}
+	
+	/**
 	 * Metodo para obtener todos los Productos de la API por CATEGORIA
 	 * @param categoria
 	 * @return lista de Productos con esa categoria

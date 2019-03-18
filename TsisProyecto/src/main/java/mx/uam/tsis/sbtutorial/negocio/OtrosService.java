@@ -1,6 +1,7 @@
 package mx.uam.tsis.sbtutorial.negocio;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import mx.uam.tsis.sbtutorial.datos.OtrosRepository;
@@ -17,6 +18,12 @@ public class OtrosService {
 
 	public Iterable<Otros> dameOtros() {
 		return repository.findAll();
+	}
+	
+	public Iterable<Otros> OtrosPorPagina(int pageNumber, int pageSize){
+		PageRequest pageRequest = new PageRequest(pageNumber,pageSize);
+	    Iterable<Otros> res = repository.findAll(pageRequest);
+	    return  res;
 	}
 	
 	public boolean agregarDueño(long idUsuario,Otros otro) {

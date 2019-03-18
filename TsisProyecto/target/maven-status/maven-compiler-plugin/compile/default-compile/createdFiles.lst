@@ -11,11 +11,9 @@ mx/uam/tsis/sbtutorial/negocio/dominio/Usuario.class
 mx/uam/tsis/sbtutorial/servicios/ElectronicaRestController.class
 mx/uam/tsis/sbtutorial/datos/TutoriaRepository.class
 mx/uam/tsis/sbtutorial/negocio/dominio/Electronica.class
-mx/uam/tsis/sbtutorial/negocio/dominio/Proyectos.class
 exception/FileStorageException.class
 mx/uam/tsis/sbtutorial/servicios/OtrosRestController.class
 mx/uam/tsis/sbtutorial/servicios/ProductoRestController$URL.class
-mx/uam/tsis/sbtutorial/negocio/dominio/Tutoria.class
 mx/uam/tsis/sbtutorial/negocio/UsuarioService.class
 mx/uam/tsis/sbtutorial/servicios/ProyectosRestController.class
 mx/uam/tsis/sbtutorial/datos/OtrosRepository.class

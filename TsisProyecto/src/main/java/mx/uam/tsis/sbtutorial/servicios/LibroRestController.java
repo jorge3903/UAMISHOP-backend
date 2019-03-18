@@ -113,6 +113,17 @@ public class LibroRestController {
 	}
 	
 	/**
+	 *  Metodo para obtener todos los libros de la API por pagina
+	 * @return lista de todos los productos por pagina
+	 */
+	@RequestMapping(value = "/librosPorPagina", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<Libro>> librosPorPagina(@RequestParam int pagina,@RequestParam int elementos){
+		Iterable<Libro> libro = servicioLibros.libroPorPagina(pagina, elementos);
+		// return servicioProductos.dameProductos();
+		return new ResponseEntity<Iterable<Libro>>(libro, HttpStatus.OK);
+	}
+	
+	/**
 	 * Metodo para obtener todos los libros de la API por CATEGORIA
 	 * @param categoria
 	 * @return lista de Productos con esa categoria

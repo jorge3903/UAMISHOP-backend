@@ -1,11 +1,11 @@
 package mx.uam.tsis.sbtutorial.negocio;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import mx.uam.tsis.sbtutorial.datos.ElectronicaRepository;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Electronica;
-import mx.uam.tsis.sbtutorial.negocio.dominio.Libro;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Usuario;
 
 @Service
@@ -20,6 +20,12 @@ public class ElectronicaService {
 		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
+	
+	public Iterable<Electronica> electronicaPorPagina(int pageNumber, int pageSize){
+	      PageRequest pageRequest = new PageRequest(pageNumber,pageSize);
+	      Iterable<Electronica> res = repository.findAll(pageRequest);
+	      return  res;
+	   }
 	
 	public boolean agregarDueño(long idUsuario,Electronica electronica) {
 		Usuario usuario = servicioUsuario.agregarProducto(idUsuario, electronica);

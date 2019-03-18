@@ -106,6 +106,17 @@ public class DepartamentoRestController {
 	}
 	
 	/**
+	 *  Metodo para obtener todos los Departamentos de la API por pagina
+	 * @return lista de todos los departamentos de la pagina
+	 */
+	@RequestMapping(value = "/departamentosPorPagina", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<Departamento>> departamentosPorPagina(@RequestParam int pagina,@RequestParam int elementos){
+		Iterable<Departamento> departamentos = servicioDepartamento.departamentoPorPagina(pagina, elementos);
+		// return servicioProductos.dameProductos();
+		return new ResponseEntity<Iterable<Departamento>>(departamentos, HttpStatus.OK);
+	}
+	
+	/**
 	 * Metodo para editar la informacion de un departamento
 	 * @param idUsuario
 	 * @param idProducto
