@@ -1,12 +1,11 @@
 package mx.uam.tsis.sbtutorial.negocio;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import mx.uam.tsis.sbtutorial.datos.DepartamentoRepository;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Departamento;
-import mx.uam.tsis.sbtutorial.negocio.dominio.Producto;
-import mx.uam.tsis.sbtutorial.negocio.dominio.Tutoria;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Usuario;
 
 @Service
@@ -21,6 +20,12 @@ public class DepartamentoService {
 		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
+	
+	public Iterable<Departamento> departamentoPorPagina(int pageNumber, int pageSize){
+	      PageRequest pageRequest = new PageRequest(pageNumber,pageSize);
+	      Iterable<Departamento> res = repository.findAll(pageRequest);
+	      return  res;
+	   }
 	
 	public Departamento agregarDepartamento(Departamento departamento) {
 		// TODO Auto-generated method stub

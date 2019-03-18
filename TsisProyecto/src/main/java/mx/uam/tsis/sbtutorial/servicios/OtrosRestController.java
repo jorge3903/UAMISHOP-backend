@@ -97,6 +97,17 @@ public class OtrosRestController {
 		Iterable<Otros> otro = servicioOtros.dameOtros();
 		return new ResponseEntity<Iterable<Otros>>(otro, HttpStatus.OK);
 	}
+	
+	/**
+	 *  Metodo para obtener todos los productos de la categoria "otros" de la API por pagina
+	 * @return lista de todos los productos de la categoria "otros" de la pagina
+	 */
+	@RequestMapping(value = "/otrosPorPagina", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<Otros>> otrosPorPagina(@RequestParam int pagina,@RequestParam int elementos){
+		Iterable<Otros> otro = servicioOtros.OtrosPorPagina(pagina, elementos);
+		return new ResponseEntity<Iterable<Otros>>(otro, HttpStatus.OK);
+	}
+	
 	//ya se guarda en github
 	/**@RequestMapping(value = "/p1", method = RequestMethod.GET)
 	public String pru1(){

@@ -1,6 +1,7 @@
 package mx.uam.tsis.sbtutorial.negocio;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import mx.uam.tsis.sbtutorial.datos.LibroRepository;
@@ -19,6 +20,12 @@ public class LibroService {
 		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
+	
+	public Iterable<Libro> libroPorPagina(int pageNumber, int pageSize){
+	      PageRequest pageRequest = new PageRequest(pageNumber,pageSize);
+	      Iterable<Libro> res = repository.findAll(pageRequest);
+	      return  res;
+	   }
 	
 	public boolean agregarDueño(long idUsuario,Libro libro) {
 		Usuario usuario = servicioUsuario.agregarProducto(idUsuario, libro);

@@ -1,10 +1,10 @@
 package mx.uam.tsis.sbtutorial.negocio;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import mx.uam.tsis.sbtutorial.datos.TutoriaRepository;
-import mx.uam.tsis.sbtutorial.negocio.dominio.Producto;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Tutoria;
 import mx.uam.tsis.sbtutorial.negocio.dominio.Usuario;
 
@@ -20,6 +20,12 @@ public class TutoriaService {
 		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
+	
+	public Iterable<Tutoria> tutoriaPorPagina(int pageNumber, int pageSize){
+	      PageRequest pageRequest = new PageRequest(pageNumber,pageSize);
+	      Iterable<Tutoria> res = repository.findAll(pageRequest);
+	      return  res;
+	   }
 	
 	public Tutoria agregarTutoria(Tutoria tutoria) {
 		// TODO Auto-generated method stub

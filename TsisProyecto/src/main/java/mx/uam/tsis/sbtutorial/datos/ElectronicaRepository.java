@@ -1,9 +1,9 @@
 package mx.uam.tsis.sbtutorial.datos;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import mx.uam.tsis.sbtutorial.negocio.dominio.Electronica;
 
-public interface ElectronicaRepository extends CrudRepository<Electronica, Long>{
+public interface ElectronicaRepository extends PagingAndSortingRepository<Electronica, Long>{
 
 }
