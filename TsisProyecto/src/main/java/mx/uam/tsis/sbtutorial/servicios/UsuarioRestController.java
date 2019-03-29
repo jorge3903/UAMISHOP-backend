@@ -40,15 +40,23 @@ public class UsuarioRestController {
 	 */
 	@PostMapping(value = "/usuarios")
 	public ResponseEntity<Usuario> agregarUsuario(@RequestParam String nombre,@RequestParam String correo){
-		Usuario nuevoUsuario = servicioUsuarios.agregarUsuario(new Usuario(nombre,correo));
-		if(nuevoUsuario!=null) {
-			//return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.CREATED);
-			return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.OK);
-		}
-		
-		else {
-			//return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.BAD_REQUEST);
-			return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.BAD_REQUEST);
+		String nombreUser = nombre.trim();
+		String correoUser = correo.trim();
+		if(nombreUser.length() !=0 && correoUser.length() != 0) {
+			Usuario nuevoUsuario = servicioUsuarios.agregarUsuario(new Usuario(nombreUser,correoUser));
+			if(nuevoUsuario!=null) {
+				//return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.CREATED);
+				return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.OK);
+			} else {
+				nuevoUsuario = new Usuario("no","no");
+				nuevoUsuario.setId((long) -1);
+				//return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Usuario>(nuevoUsuario, HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			Usuario user = new Usuario("no","no");
+			user.setId((long) -1);
+			return new ResponseEntity<Usuario>(user, HttpStatus.BAD_REQUEST);
 		}
 	}
 
