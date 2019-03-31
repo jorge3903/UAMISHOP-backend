@@ -20,7 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Collection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
 public class ArchivoService {
@@ -43,8 +44,10 @@ public class ArchivoService {
     }
 
     public String storeFile(MultipartFile file) {
+    	Date date = new Date();
+    	String clave = new SimpleDateFormat("HHmmss_ddMMyy").format(date);
         // Normalize file name
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = clave + StringUtils.cleanPath(file.getOriginalFilename());
 
         try {
             // Check if the file's name contains invalid characters
